@@ -23,6 +23,23 @@ Public Class Form1
     End Sub
 
     Private Sub ButtonInsert_Click(sender As Object, e As EventArgs) Handles ButtonInsert.Click
+        Dim query As String = " Insert into students_tbl (name, age, email) VALUES (@name, @age, @email)"
 
+        Try
+            Using conn As New MySqlConnection("server=localhost; userid= root; password=root; database=cruddemo;")
+                conn.Open()
+                Using cmd As New MySqlCommand(query, conn)
+                    cmd.Parameters.AddWithValue("@name", TextBoxName.Text)
+                    cmd.Parameters.AddWithValue("@age", CInt(TextBoxAge.Text))
+                    cmd.Parameters.AddWithValue("@email", TextBoxEmail.Text)
+
+                    cmd.ExecuteNonQuery()
+                    MessageBox.Show("Record Inserted Successfully")
+                End Using
+            End Using
+        Catch ex As Exception
+            MsgBox(ex.Message)
+
+        End Try
     End Sub
 End Class
