@@ -1,45 +1,160 @@
-﻿Imports MySql.Data.MySqlClient
+﻿Imports System.Windows.Forms.VisualStyles.VisualStyleElement
+Imports MySql.Data.MySqlClient
 
 Public Class Form1
 
-    Dim conn As MySqlConnection
-    Dim command As MySqlCommand
+    Dim connectionString As String = "server=localhost; userid=root; password=root; database=crud_demo_db;"
+
+
 
     Private Sub ButtonConnect_Click(sender As Object, e As EventArgs) Handles ButtonConnect.Click
-        conn = New MySqlConnection
-        conn.ConnectionString = "server=localhost; userid= root; password=root; database=cruddemo;"
-
         Try
-            conn.Open()
-            MessageBox.Show("Connection Successful")
-
+            Using conn As New MySqlConnection(connectionString)
+                conn.Open()
+                MessageBox.Show("Connected successfully!")
+            End Using
         Catch ex As Exception
             MessageBox.Show(ex.Message)
-            conn.Close()
-
-
         End Try
-
     End Sub
 
+
+
     Private Sub ButtonInsert_Click(sender As Object, e As EventArgs) Handles ButtonInsert.Click
-        Dim query As String = " Insert into students_tbl (name, age, email) VALUES (@name, @age, @email)"
+
+        Dim age As Integer
+        If Not Integer.TryParse(TextBoxAge.Text, age) Then
+            MsgBox("Please enter a valid age.")
+            Exit Sub
+        End If
+
+        Dim query As String = "INSERT INTO student_tbl (name, age, email) VALUES (@name, @age, @email)"
 
         Try
-            Using conn As New MySqlConnection("server=localhost; userid= root; password=root; database=cruddemo;")
+            Using conn As New MySqlConnection(connectionString)
                 conn.Open()
+
                 Using cmd As New MySqlCommand(query, conn)
                     cmd.Parameters.AddWithValue("@name", TextBoxName.Text)
-                    cmd.Parameters.AddWithValue("@age", CInt(TextBoxAge.Text))
+                    cmd.Parameters.AddWithValue("@age", age)
                     cmd.Parameters.AddWithValue("@email", TextBoxEmail.Text)
 
                     cmd.ExecuteNonQuery()
-                    MessageBox.Show("Record Inserted Successfully")
+                    MsgBox("Record added successfully!")
                 End Using
             End Using
+
+            LoadTable()
+
         Catch ex As Exception
             MsgBox(ex.Message)
-
         End Try
     End Sub
+
+
+
+
+    Private Sub ButtonRead_Click(sender As Object, e As EventArgs) Handles ButtonRead.Click
+        LoadTable()
+    End Sub
+
+    Private Sub LoadTable()
+        Dim query As String = "SELECT id, name, age, email FROM student_tbl"
+
+        Try
+            Using conn As New MySqlConnection(connectionString)
+                Dim adapter As New MySqlDataAdapter(query, conn)
+                Dim table As New DataTable()
+                adapter.Fill(table)
+                DataGridView1.DataSource = table
+            End Using
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+    End Sub
+
+
+
+
+    Private Sub ButtonUpdate_Click(sender As Object, e As EventArgs) Handles ButtonUpdate.Click
+
+        If TextBoxID.Text = "" Then
+            MsgBox("Please select a record to update.")
+            Exit Sub
+        End If
+
+        Dim age As Integer
+        If Not Integer.TryParse(TextBoxAge.Text, age) Then
+            MsgBox("Please enter a valid age.")
+            Exit Sub
+        End If
+
+        Dim query As String = "UPDATE student_tbl SET name=@name, age=@age, email=@email WHERE id=@id"
+
+        Try
+            Using conn As New MySqlConnection(connectionString)
+                conn.Open()
+                Using cmd As New MySqlCommand(query, conn)
+                    cmd.Parameters.AddWithValue("@id", TextBoxID.Text)
+                    cmd.Parameters.AddWithValue("@name", TextBoxName.Text)
+                    cmd.Parameters.AddWithValue("@age", age)
+                    cmd.Parameters.AddWithValue("@email", TextBoxEmail.Text)
+
+                    cmd.ExecuteNonQuery()
+                    MsgBox("Record updated successfully!")
+                End Using
+            End Using
+
+            LoadTable()
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+    End Sub
+
+
+
+    Private Sub ButtonDelete_Click(sender As Object, e As EventArgs) Handles ButtonDelete.Click
+
+        If TextBoxID.Text = "" Then
+            MsgBox("Please select a record to delete.")
+            Exit Sub
+        End If
+
+        Dim query As String = "DELETE FROM student_tbl WHERE id=@id"
+
+        Try
+            Using conn As New MySqlConnection(connectionString)
+                conn.Open()
+
+                Using cmd As New MySqlCommand(query, conn)
+                    cmd.Parameters.AddWithValue("@id", TextBoxID.Text)
+                    cmd.ExecuteNonQuery()
+                End Using
+            End Using
+
+            MsgBox("Record deleted successfully!")
+            LoadTable()
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+    End Sub
+
+
+
+
+    Private Sub DataGridView1_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellClick
+        If e.RowIndex >= 0 Then
+            Dim row As DataGridViewRow = DataGridView1.Rows(e.RowIndex)
+
+            TextBoxID.Text = row.Cells("id").Value.ToString()
+            TextBoxName.Text = row.Cells("name").Value.ToString()
+            TextBoxAge.Text = row.Cells("age").Value.ToString()
+            TextBoxEmail.Text = row.Cells("email").Value.ToString()
+        End If
+    End Sub
+
 End Class
+
