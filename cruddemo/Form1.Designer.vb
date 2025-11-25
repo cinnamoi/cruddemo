@@ -97,7 +97,7 @@ Partial Class Form1
         '
         'ButtonInsert
         '
-        Me.ButtonInsert.Location = New System.Drawing.Point(333, 321)
+        Me.ButtonInsert.Location = New System.Drawing.Point(333, 343)
         Me.ButtonInsert.Name = "ButtonInsert"
         Me.ButtonInsert.Size = New System.Drawing.Size(184, 35)
         Me.ButtonInsert.TabIndex = 7
@@ -124,7 +124,7 @@ Partial Class Form1
         '
         'ButtonRead
         '
-        Me.ButtonRead.Location = New System.Drawing.Point(333, 372)
+        Me.ButtonRead.Location = New System.Drawing.Point(333, 396)
         Me.ButtonRead.Name = "ButtonRead"
         Me.ButtonRead.Size = New System.Drawing.Size(184, 32)
         Me.ButtonRead.TabIndex = 10
