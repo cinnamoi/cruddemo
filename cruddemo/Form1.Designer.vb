@@ -36,17 +36,19 @@ Partial Class Form1
         Me.TextBoxEmail = New System.Windows.Forms.TextBox()
         Me.TextBoxID = New System.Windows.Forms.TextBox()
         Me.Label4 = New System.Windows.Forms.Label()
+        Me.TextBoxHiddenID = New System.Windows.Forms.TextBox()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'ButtonConnect
         '
-        Me.ButtonConnect.Location = New System.Drawing.Point(76, 12)
+        Me.ButtonConnect.BackColor = System.Drawing.SystemColors.InactiveCaption
+        Me.ButtonConnect.Location = New System.Drawing.Point(95, 12)
         Me.ButtonConnect.Name = "ButtonConnect"
-        Me.ButtonConnect.Size = New System.Drawing.Size(357, 168)
+        Me.ButtonConnect.Size = New System.Drawing.Size(329, 168)
         Me.ButtonConnect.TabIndex = 0
         Me.ButtonConnect.Text = "ConnectMySQL"
-        Me.ButtonConnect.UseVisualStyleBackColor = True
+        Me.ButtonConnect.UseVisualStyleBackColor = False
         '
         'Label1
         '
@@ -63,7 +65,7 @@ Partial Class Form1
         Me.TextBoxName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.TextBoxName.Location = New System.Drawing.Point(136, 186)
         Me.TextBoxName.Name = "TextBoxName"
-        Me.TextBoxName.Size = New System.Drawing.Size(268, 20)
+        Me.TextBoxName.Size = New System.Drawing.Size(156, 20)
         Me.TextBoxName.TabIndex = 2
         '
         'Label2
@@ -81,7 +83,7 @@ Partial Class Form1
         Me.TextBoxAge.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.TextBoxAge.Location = New System.Drawing.Point(136, 220)
         Me.TextBoxAge.Name = "TextBoxAge"
-        Me.TextBoxAge.Size = New System.Drawing.Size(268, 20)
+        Me.TextBoxAge.Size = New System.Drawing.Size(156, 20)
         Me.TextBoxAge.TabIndex = 4
         '
         'Label3
@@ -95,46 +97,47 @@ Partial Class Form1
         '
         'ButtonInsert
         '
-        Me.ButtonInsert.Location = New System.Drawing.Point(184, 326)
+        Me.ButtonInsert.Location = New System.Drawing.Point(333, 321)
         Me.ButtonInsert.Name = "ButtonInsert"
-        Me.ButtonInsert.Size = New System.Drawing.Size(249, 37)
+        Me.ButtonInsert.Size = New System.Drawing.Size(184, 35)
         Me.ButtonInsert.TabIndex = 7
         Me.ButtonInsert.Text = "Create InsertData"
         Me.ButtonInsert.UseVisualStyleBackColor = True
         '
         'ButtonDelete
         '
-        Me.ButtonDelete.Location = New System.Drawing.Point(482, 384)
+        Me.ButtonDelete.Location = New System.Drawing.Point(552, 396)
         Me.ButtonDelete.Name = "ButtonDelete"
-        Me.ButtonDelete.Size = New System.Drawing.Size(287, 44)
+        Me.ButtonDelete.Size = New System.Drawing.Size(199, 32)
         Me.ButtonDelete.TabIndex = 8
         Me.ButtonDelete.Text = "Delete (Remove data)"
         Me.ButtonDelete.UseVisualStyleBackColor = True
         '
         'ButtonUpdate
         '
-        Me.ButtonUpdate.Location = New System.Drawing.Point(482, 326)
+        Me.ButtonUpdate.Location = New System.Drawing.Point(552, 343)
         Me.ButtonUpdate.Name = "ButtonUpdate"
-        Me.ButtonUpdate.Size = New System.Drawing.Size(287, 37)
+        Me.ButtonUpdate.Size = New System.Drawing.Size(199, 35)
         Me.ButtonUpdate.TabIndex = 9
         Me.ButtonUpdate.Text = "Update (Edit Data)"
         Me.ButtonUpdate.UseVisualStyleBackColor = True
         '
         'ButtonRead
         '
-        Me.ButtonRead.Location = New System.Drawing.Point(184, 384)
+        Me.ButtonRead.Location = New System.Drawing.Point(333, 372)
         Me.ButtonRead.Name = "ButtonRead"
-        Me.ButtonRead.Size = New System.Drawing.Size(249, 44)
+        Me.ButtonRead.Size = New System.Drawing.Size(184, 32)
         Me.ButtonRead.TabIndex = 10
         Me.ButtonRead.Text = "Read (Retrieve data)"
         Me.ButtonRead.UseVisualStyleBackColor = True
         '
         'DataGridView1
         '
+        Me.DataGridView1.BackgroundColor = System.Drawing.SystemColors.ScrollBar
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView1.Location = New System.Drawing.Point(482, 28)
+        Me.DataGridView1.Location = New System.Drawing.Point(430, 7)
         Me.DataGridView1.Name = "DataGridView1"
-        Me.DataGridView1.Size = New System.Drawing.Size(306, 256)
+        Me.DataGridView1.Size = New System.Drawing.Size(343, 291)
         Me.DataGridView1.TabIndex = 11
         '
         'TextBoxEmail
@@ -143,7 +146,7 @@ Partial Class Form1
         Me.TextBoxEmail.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.TextBoxEmail.Location = New System.Drawing.Point(136, 248)
         Me.TextBoxEmail.Name = "TextBoxEmail"
-        Me.TextBoxEmail.Size = New System.Drawing.Size(268, 20)
+        Me.TextBoxEmail.Size = New System.Drawing.Size(156, 20)
         Me.TextBoxEmail.TabIndex = 5
         '
         'TextBoxID
@@ -152,7 +155,7 @@ Partial Class Form1
         Me.TextBoxID.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.TextBoxID.Location = New System.Drawing.Point(136, 283)
         Me.TextBoxID.Name = "TextBoxID"
-        Me.TextBoxID.Size = New System.Drawing.Size(268, 20)
+        Me.TextBoxID.Size = New System.Drawing.Size(156, 20)
         Me.TextBoxID.TabIndex = 12
         '
         'Label4
@@ -164,11 +167,21 @@ Partial Class Form1
         Me.Label4.TabIndex = 13
         Me.Label4.Text = "ID:"
         '
+        'TextBoxHiddenID
+        '
+        Me.TextBoxHiddenID.BackColor = System.Drawing.SystemColors.InactiveCaption
+        Me.TextBoxHiddenID.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.TextBoxHiddenID.Location = New System.Drawing.Point(136, 309)
+        Me.TextBoxHiddenID.Name = "TextBoxHiddenID"
+        Me.TextBoxHiddenID.Size = New System.Drawing.Size(156, 20)
+        Me.TextBoxHiddenID.TabIndex = 14
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(800, 450)
+        Me.Controls.Add(Me.TextBoxHiddenID)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.TextBoxID)
         Me.Controls.Add(Me.DataGridView1)
@@ -205,4 +218,5 @@ Partial Class Form1
     Friend WithEvents TextBoxEmail As TextBox
     Friend WithEvents TextBoxID As TextBox
     Friend WithEvents Label4 As Label
+    Friend WithEvents TextBoxHiddenID As TextBox
 End Class
