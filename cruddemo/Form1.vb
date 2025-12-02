@@ -1,10 +1,9 @@
 ﻿Imports System.Windows.Forms.VisualStyles.VisualStyleElement
 Imports MySql.Data.MySqlClient
 
-Public Class Form1
+Public Class ButtonUpdate2
 
     Dim connectionString As String = "server=localhost; userid=root; password=root; database=crud_demo_db;"
-
 
 
     Private Sub ButtonConnect_Click(sender As Object, e As EventArgs) Handles ButtonConnect.Click
@@ -17,7 +16,6 @@ Public Class Form1
             MessageBox.Show(ex.Message)
         End Try
     End Sub
-
 
 
     Private Sub ButtonInsert_Click(sender As Object, e As EventArgs) Handles ButtonInsert.Click
@@ -41,6 +39,12 @@ Public Class Form1
 
                     cmd.ExecuteNonQuery()
                     MsgBox("Record added successfully!")
+
+                    TextBoxName.Clear()
+                    TextBoxAge.Clear()
+                    TextBoxEmail.Clear()
+
+
                 End Using
             End Using
 
@@ -50,7 +54,6 @@ Public Class Form1
             MsgBox(ex.Message)
         End Try
     End Sub
-
 
 
 
@@ -67,10 +70,17 @@ Public Class Form1
                 Dim table As New DataTable()
                 adapter.Fill(table)
                 DataGridView1.DataSource = table
+                DataGridView1.Columns("id").Visible = False
+                DataGridView1.Columns("is_deleted").Visible = False
+
             End Using
 
         Catch ex As Exception
             MsgBox(ex.Message)
+            TextBoxName.Clear()
+            TextBoxAge.Clear()
+            TextBoxEmail.Clear()
+
         End Try
     End Sub
 
@@ -103,6 +113,10 @@ Public Class Form1
 
                     cmd.ExecuteNonQuery()
                     MsgBox("Record updated successfully!")
+                    TextBoxName.Clear()
+                    TextBoxAge.Clear()
+                    TextBoxEmail.Clear()
+
                 End Using
             End Using
 
@@ -143,8 +157,6 @@ Public Class Form1
     End Sub
 
 
-
-
     Private Sub DataGridView1_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellClick
         If e.RowIndex >= 0 Then
             Dim row As DataGridViewRow = DataGridView1.Rows(e.RowIndex)
@@ -167,14 +179,60 @@ Public Class Form1
             TextBoxHiddenID.Text = row.Cells("id").Value.ToString()
 
 
-
-
-
         End If
+    End Sub
 
 
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+
+        Dim query As String = "Update 'crud_demo_db'.'students_tbl'
+            SET'name; = @name,
+             'age' = @age,
+               'email' = @email
+                WHERE ('id' = @id);"
+
+        Try
+            Using conn As New MySqlConnection("server=location; userid=root; password=root; database=crud_demo_db;")
+                conn.Open()
+                Using cmd As New MySqlCommand(query, conn)
+                    cmd.Parameters.AddWithValue("@id", CInt(TextBoxID.Text))
+                    cmd.Parameters.AddWithValue("@name", TextBoxName.Text)
+                    cmd.Parameters.AddWithValue("@age", CInt(TextBoxAge.Text))
+                    cmd.Parameters.AddWithValue("@email", TextBoxEmail.Text)
+                    cmd.ExecuteNonQuery()
+                    MsgBox("Record updated data successfully!")
+                End Using
+            End Using
+        Catch ex As Exception
+            MsgBox(ex.Message)
+
+        End Try
+    End Sub
+
+    Private Sub ButtonDelete2_Click(sender As Object, e As EventArgs) Handles ButtonDelete2.Click
+        'Dim query As String = "DELETE FROM 'crud_demo_db'.' studeents_tbl   WHERE ('id" = @id")
 
 
+        Dim query As String = "UPDATE ' crud_demo-db'.'sudents_tbl'
+                                SET 'is_deleted' = 1
+                                WHERE id = @id"
+        Try
+            Using conn As New MySqlConnection("server=location; userid=root; password=root; database=crud_demo_db;")
+                conn.Open()
+                Using cmd As New MySqlCommand(query, conn)
+                    cmd.Parameters.AddWithValue("@id", CInt(TextBoxHiddenID.Text))
+                    cmd.ExecuteNonQuery()
+                    MsgBox("Record Delete data successfully!")
+
+                    TextBoxName.Clear()
+                    TextBoxAge.Clear()
+                    TextBoxEmail.Clear()
+                End Using
+            End Using
+        Catch ex As Exception
+            MsgBox(ex.Message)
+
+        End Try
 
     End Sub
 End Class
